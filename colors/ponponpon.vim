@@ -7,6 +7,8 @@ if exists("syntax_on")
 endif
 let g:colors_name = "ponponpon"
 
+" VARIABLES
+" ---------
 let s:no = 'NONE'
 let s:empty = {'gui':s:no, 'xterm':s:no, 'term':s:no}
 let s:re = 'reverse'
@@ -16,7 +18,7 @@ let s:bo = 'bold'
 " -----
 let s:x0 = {'gui':'#000000', 'xterm': 16, 'term':'Black'}
 let s:x1 = {'gui':'#9a9a9a', 'xterm':247, 'term':'DarkGray'}
-"let s:x2
+let s:x2 = {'gui':'#df4c70', 'xterm':203, 'term':'DarkMagenta'}
 let s:x3 = {'gui':'#ffffff', 'xterm':231, 'term':'White'}
 
 let s:x4 = {'gui':'#30305f', 'xterm': 17, 'term':'Black'}
@@ -44,16 +46,17 @@ let s:d  = s:x5
 let s:e  = s:xc
 let s:z  = s:x1
 let s:nb = s:xb
-let s:nf = s:xa
+let s:nf = s:x2
 let s:sb = s:xc
 let s:sf = s:x0
 let s:vb = s:xc
 let s:vf = 0
+let s:ui = s:xa
 else
 " DARK THEME
 " ----------
-let s:a  = s:x8
-let s:b  = s:xa
+let s:a  = s:x9
+let s:b  = s:x8
 let s:c  = s:x7
 let s:d  = s:x5
 let s:e  = s:xc
@@ -62,18 +65,13 @@ let s:nb = s:x4
 let s:nf = s:x3
 let s:sb = s:xc
 let s:sf = s:x0
-let s:vb = s:x9
-let s:vf = s:x3
+let s:vb = s:xc
+let s:vf = s:x2
+let s:ui = s:xa
 endif
 
 " SETUP
 " -----
-nnoremap <F5> :colo ponponpon<CR>
-nnoremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name")
-\ . '> trans<'
-\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-
 if &t_Co == 256
   let s:sys='xterm'
 else
@@ -98,8 +96,15 @@ call <SID>h('Search', s:sf, {'bg':s:sb})
 call <SID>h('Visual', s:vf, {'bg':s:vb})
 call <SID>h('ColorColumn', 0, {'bg':s:vb})
 
+call <SID>h('FoldColumn', s:ui, {})
+call <SID>h('StatusLineNC', s:nb, {'bg': s:ui})
+hi! link VertSplit StatusLineNC
+hi! link StatusLine StatusLineNC
+"call <SID>h('StatusLine', s:nb, {'bg': s:vb})
+
 call <SID>h('Comment', s:z, {})
 hi! link SpecialKey Comment
+call <SID>h('Folded', s:nb, {'bg':s:z})
 
 call <SID>h('Statement', s:a, {})
 
@@ -124,8 +129,5 @@ else
   hi! link StorageClass Storage
   hi! link PreProc Storage
   call <SID>h('Special', s:e, {})
-  call <SID>h('StatusLine', s:nb, {'bg': s:vb})
-  hi! link StatusLineNC StatusLine
-  hi! link VertSplit StatusLine
   call <SID>h('MatchParen', s:vb, {})
 endif
