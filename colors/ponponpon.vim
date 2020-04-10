@@ -93,17 +93,23 @@ endfun
 " ---------
 call <SID>h('Normal', s:nf, {'bg':s:nb})
 call <SID>h('Search', s:sf, {'bg':s:sb})
+
 call <SID>h('Visual', s:vf, {'bg':s:vb})
-call <SID>h('ColorColumn', 0, {'bg':s:vb})
+hi! link ColorColumn Visual
+hi! link CursorColumn Visual
+hi! link CursorLine CursorColumn
+hi! link CursorLineNr CursorLine
 
 call <SID>h('FoldColumn', s:ui, {})
 call <SID>h('StatusLineNC', s:nb, {'bg': s:ui})
-hi! link VertSplit StatusLineNC
 hi! link StatusLine StatusLineNC
+hi! link VertSplit StatusLineNC
 "call <SID>h('StatusLine', s:nb, {'bg': s:vb})
 
 call <SID>h('Comment', s:z, {})
+hi! link LineNR Comment
 hi! link SpecialKey Comment
+hi! link htmlEndTag Comment
 call <SID>h('Folded', s:nb, {'bg':s:z})
 
 call <SID>h('Statement', s:a, {})
@@ -121,6 +127,8 @@ hi! link Character Constant
 hi! link Identifier Constant
 hi! link SpecialChar Constant
 
+" BACKGROUND
+" ----------
 if &background ==# 'light'
   hi! link PreProc Statement
   hi! link Special Statement
